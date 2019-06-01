@@ -16,11 +16,11 @@ let ball = {
   },
 
   draw () {
-    ctx.beginPath()
-    ctx.arc(this.x, this.y, 5, 0, Math.PI*2)
-    ctx.fillStyle = 'red'
+    ctx.beginPath();
+    ctx.fillStyle = 'red';
+    ctx.moveTo(this.x, this.y);
+    ctx.arc(this.x, this.y, 5, 0, Math.PI*2, true);
     ctx.fill()
-    ctx.closePath()
   },
 
   update (timeInterval) {
@@ -65,7 +65,10 @@ function status (ball) {
 const fps = 100
 const timeInterval = 0.01 / fps
 setInterval(function(){
-  ctx.clearRect(0, 0, canvas.width, canvas.height)
+  ctx.fillStyle = 'rgba(255, 255, 255, .03)'
+  ctx.fillRect(0, 0, canvas.width, canvas.height)
+  
   ball.update(timeInterval)
+
   info.innerText = status(ball)
 }, 0.1)
