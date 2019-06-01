@@ -9,8 +9,8 @@ let ball = {
     this.x = canvas.width / 8 * 1
     this.y = canvas.height / 8 * 1.5
     this.mass = 2
-    this.speedX = 60
-    this.speedY = 1
+    this.speedX = 800
+    this.speedY = 0
     this.accY = 0
     this.draw()
   },
@@ -25,16 +25,28 @@ let ball = {
 
   update (timeInterval) {
     this.accY = this.mass * gravity
-
     this.speedY += this.accY
-    // this.acc += gravity * this.mass
-    // this.speedY += this.acc
-    // this.x += timeInterval * this.speedX
+    
+    this.x += timeInterval * this.speedX
     this.y += timeInterval * this.speedY
 
+    if (this.x > canvas.width) {
+      this.speedX *= -0.8
+      this.speedY *= 0.99
+      this.x = canvas.width + timeInterval * this.speedX
+    } else if (this.x < 0) {
+      this.speedX *= -0.8
+      this.speedY *= 0.99
+      this.x = 1.0 + timeInterval * this.speedX
+    }
     if (this.y > canvas.height) {
+      this.speedX *= 0.99
       this.speedY *= -0.8
       this.y = canvas.height + timeInterval * this.speedY
+    } else if (this.y < 0) {
+      this.speedX *= 0.99
+      this.speedY *= -0.8
+      this.y = 1.0 + timeInterval * this.speedY
     }
     this.draw()
   }
@@ -50,10 +62,10 @@ function status (ball) {
   return info
 }
 
-const fps = 1000
-const timeInterval = 1.0 / fps
+const fps = 100
+const timeInterval = 0.01 / fps
 setInterval(function(){
   ctx.clearRect(0, 0, canvas.width, canvas.height)
   ball.update(timeInterval)
   info.innerText = status(ball)
-}, 1)
+}, 0.1)
