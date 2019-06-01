@@ -1,24 +1,31 @@
+function fromInput (elementId) {
+  return Number(document.getElementById(elementId).value)
+}
+
 const canvas = document.getElementById('canvas')
 const ctx = canvas.getContext('2d')
 
 const info = document.getElementById('info')
 
+let trace = true
 let gravity = 9.8
+
 let ball = {
   init () {
     this.x = canvas.width / 8 * 1
     this.y = canvas.height / 8 * 1.5
     this.mass = 2
-    this.speedX = 800
-    this.speedY = 0
+    this.speedX = fromInput('speedX')
+    this.speedY = fromInput('speedY')
     this.accY = 0
     this.draw()
   },
 
   draw () {
     ctx.beginPath();
-    ctx.fillStyle = 'red';
-    ctx.moveTo(this.x, this.y);
+    ctx.fillStyle = 'red'
+    if (trace)
+      ctx.moveTo(this.x, this.y)
     ctx.arc(this.x, this.y, 5, 0, Math.PI*2, true);
     ctx.fill()
   },
@@ -65,8 +72,10 @@ function status (ball) {
 const fps = 100
 const timeInterval = 0.01 / fps
 setInterval(function(){
-  ctx.fillStyle = 'rgba(255, 255, 255, .03)'
-  ctx.fillRect(0, 0, canvas.width, canvas.height)
+  if (trace) {
+    ctx.fillStyle = 'rgba(255, 255, 255, .03)'
+    ctx.fillRect(0, 0, canvas.width, canvas.height)
+  } else ctx.clearRect(0, 0, canvas.width, canvas.height)
   
   ball.update(timeInterval)
 

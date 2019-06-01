@@ -1,13 +1,30 @@
 <div class="game">
   <canvas id="canvas"></canvas>
 </div>
+<div class="settings">
+  <button class="util" onclick="toggleTrace()"> Toggle Trace
+  <button class="util" onclick="restart()">Restart</button><br/>
+  <label>x 속도: </label><input id="speedX" value="800" type="number" onchange="loadInput()"><br/>
+  <label>y 속도: </label><input id="speedY" value="0" type="number" onchange="loadInput()">
+</div>
 <span id="info"></span>
 <script src="./game.js"></script>
+<script src="./utils.js"></script>
 <style>
 .game {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.settings {
+  width: 100%;
+  text-align: center;
+}
+button.util {
+  font-size: 1.5em;
+}
+label, input {
+  font-size: 2em;
 }
 canvas {
   width: 80%;
@@ -15,7 +32,7 @@ canvas {
   border: 5px solid black;
   border-radius: 5px;
 }
-span {
+#info {
   position: absolute;
   bottom: 0;
   left: 0;
